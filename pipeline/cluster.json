@@ -1,0 +1,16 @@
+{
+	"__default__":
+	{
+		"time" : "10:00:00",
+    "mem": "1G",
+		"out": "data/log/default-%j.out",
+		"err": "data/log/default-%j.err"
+	},
+	"create_allele_frequencies":
+	{
+		"time" : "12:00:00",
+    "mem": "4G",
+		"out": "data/log/create_allele_frequencies-%j.out",
+		"err": "data/log/create_allele_frequencies-%j.err"
+	}
+}
