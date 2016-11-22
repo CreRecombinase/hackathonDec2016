@@ -8,8 +8,8 @@
 	},
 	"create_allele_frequencies":
 	{
-		"time" : "12:00:00",
-    "mem": "4G",
+		"time" : "8:00:00",
+    "mem": "18G",
 		"out": "data/log/create_allele_frequencies-%j.out",
 		"err": "data/log/create_allele_frequencies-%j.err"
 	}
