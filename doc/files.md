@@ -2,6 +2,7 @@
 Brief description of all files that we are using.
 
 ######\*.assign.tsv.gz
+- THE CATEGORIES ARE OUT OF ORDER
 (tab separated)
 `CHROM POS RSID CATEGORY AFR EUR EAS SAS AMR`
 
