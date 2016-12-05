@@ -1,2 +1,4 @@
 pipeline/data
 pipeline/.snakemake
+*.swp
+*.swo
