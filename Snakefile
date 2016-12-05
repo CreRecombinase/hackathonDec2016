@@ -1,16 +1,18 @@
 """
 Hackathlon Snakemake file 
 
-This snakefile is intended to coordinate / interaction between projects
+This snakefile is intended to coordinate / interaction between projects, so
+do not add things here directly unnecessarily.
 
-Mainly just add includes like below
+To start a new project, make a subfolder and use `include` to
+add the Snakefile.
 """
 
 
 
 
 include: "projects/archaic/Snakefile"
-"""
-calling archaic genomes
-"""
+    """
+    Get all called Denisovan and Neandertal sites as annotation
+    """
 
