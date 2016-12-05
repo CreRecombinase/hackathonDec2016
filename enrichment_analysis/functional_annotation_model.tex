@@ -1,0 +1,44 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{mathptmx}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[margin=2cm]{geometry}
+\DeclareSymbolFont{extraup}{U}{zavm}{m}{n}
+\DeclareMathSymbol{\varheart}{\mathalpha}{extraup}{86}
+\DeclareMathSymbol{\vardiamond}{\mathalpha}{extraup}{87}
+\usepackage{nameref, hyperref}
+\usepackage{float}
+\usepackage{cite}
+\setlength{\parskip}{1em}
+\bibliographystyle{plos2015}
+
+\begin{document}
+
+Each SNP is categorized into four categories - very rare (0), moderately rare (1), moderately common (2) and very common (3). There are five populations (AFR, EUR, SAS, EAS, AMR) and a Beta-Binomial model was used to classify the SNPs for each population into one of the four categories. So, there are overall $4^5=1024$ possible categories and a SNP can have a category of the form $(2,3,1,0,0)$ which would mean it is moderately common in Africa (AFR), very common in Europe (EUR), moderately rare in South Asia (SAS) and very rare in East Asia (EAS) and America (AMR).
+
+So, for each SNP $j$, we define a variable $Z_{j} = \left [ 0,0, \cdots, 0, 1, 0, 0, \cdots, 0 \right ]$ which is a binaru $1024$ length vector that assigns the SNP $j$ to a particular category. Then one can fit the following model 
+
+$$ Z_{j} \sim Mult(1, \theta_{j}) $$
+
+where 
+
+$$ \theta_{j} = Inv.logit (\mu + \sum_{k=1}^{K} \beta_{k} f_{j,k} + e_{j}) $$
+
+$$ e_{j} \sim N(0, \sigma^2) $$
+
+where $f_{jk}$ is a known annotation value for the $k$th annotation and SNP $j$ which might be $1$ or $0$ depending on
+if we know whether the SNP corresponds to that association or a quantitative value if we have a numerical value of assignment of SNP $j$ to functional category $k$. 
+
+We might then want to estimate the $\beta_{k}$ and $\sigma^2$.
+
+We would also want to use the fact that there is an inherent ordering among the categories used here, for instance the populations defined above are in a natural order of gene flow whereas there is an inherent ordering among the categories as well (from very rare to very common).
+
+
+
+\end{document}
+
+
+
+
+
