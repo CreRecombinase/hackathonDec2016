@@ -7,20 +7,3 @@ import pandas as pd
 
 configfile: 'config.yaml'
 
-allele_frequencies = 'data/allele_frequencies/1kg_phase3_allele_frequencies.tsv.gz'
-
-rule all:
-    input:
-        allele_frequencies
-
-rule create_allele_frequencies:
-    '''
-    creates a table of snps and alleles from 1KG sites file and 
-    list of common (well-behaved) snps of interest 
-    '''
-    input:
-        sites_vcf = config['data']['sites_vcf'],
-    output:
-        allele_frequencies
-    run:
-        shell('python scripts/sites_to_allele_frequencies.py --sites {input.sites_vcf} | gzip -c > {output}')
