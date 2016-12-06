@@ -9,6 +9,7 @@ if(length(args)<1){
 
 library(jsonlite)
 library(emdbook) # for dbetabinom
+source("scripts/utils/utils.R")
 
 sourcefilename<-"/project/jnovembre/data/external_public/geodist/1kg_phase3_snps.tsv.gz"
 likefilename<-paste("/project/jnovembre/data/external_public/geodist/1kg_phase3_snps.geodist5d4l.",tag,".lik.tsv.gz",sep="")
@@ -72,6 +73,15 @@ assingfromfreqs<-function(snpid,freqs,flike,fassign,n=1000){
   write(paste(c(snpid,as.character(cbind(geodistindex,geodist))),collapse='\t'),fassign,sep="\t")
 }
 
+assingfromfreqs_simple<-function(snpid,freqs,flike,fassign,n=1000){
+  freqs <- as.numeric(freqs)
+  freqcuts<-c(-0.01,0,0.005,0.05,1)
+  geodist<-as.numeric(cut(freqs,freqcuts))-1
+  geodistindex<-cat2id(geodist) 
+  write(paste(c(snpid,as.character(c(geodistindex,geodist))),collapse='\t'),fassign,sep="\t")
+}
+
+
 
 processData<-function(imax=1e12){
   sourcefile<-file(sourcefilename,'r')
@@ -83,7 +93,7 @@ processData<-function(imax=1e12){
   fassign<-gzcon(assignfile)
   
   
-  i<-0
+  i<-1
   stopread<-FALSE
   
   while(!stopread) {
@@ -111,7 +121,10 @@ processData<-function(imax=1e12){
     }else{
       snpid<-recordvalues[1:3]
       freqs<-recordvalues[17:21]
-      assingfromfreqs(snpid,freqs,flike,fassign)
+      freqs<-freqs[c(2,4,1,3,5)]  ### Cludge line to fix issue that 
+                                  ### population order in freqs file does not match AFR,EUR,SAS,EAS,AMR
+      
+      assingfromfreqs_simple(snpid,freqs,flike,fassign)
     }
     
     ## Stop if i>x 
