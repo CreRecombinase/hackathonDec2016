@@ -1,0 +1,81 @@
+---
+title: "Preliminary analysis"
+author: "Benjamin Peter"
+date: "12/6/2016"
+output: html_document
+---
+
+```{r, echo=FALSE}
+library(knitr)
+library(dplyr)
+library(viridis)
+source('scripts/plotting/plot.geodist.R')
+```
+
+```{r, echo=T, cache=T}
+frq <- readRDS("projects/overview/geodist_table.rds")
+```
+
+
+```{r, echo=T}
+plot_geodist(frq)
+```
+
+Let's look at the overall distribution of categories:
+```{r, echo=T, fig.width=4, fig.height=5}
+hist(log10(frq$COUNT))
+```
+
+Ordering needs some work
+```{r, echo=T, fig.width=7, fig.height=5}
+par(mfrow=c(1,7), mar=c(3,2,0,0))
+plot_geodist(frq, colors=viridis(4), ylim=c(0, 1))
+plot_geodist(frq, colors=viridis(4), ylim=c(0, 1e-1))
+plot_geodist(frq, colors=viridis(4), ylim=c(0, 1e-2))
+plot_geodist(frq, colors=viridis(4), ylim=c(0, 1e-3))
+plot_geodist(frq, colors=viridis(4), ylim=c(0, 1e-4))
+plot_geodist(frq, colors=viridis(4), ylim=c(0, 1e-5))
+plot_geodist(frq, colors=viridis(4), ylim=c(0, 1e-6))
+```
+
+
+
+Useful functions:
+```{r, echo=T}
+id2cat(213)
+```
+```{r, echo=T}
+cat2id(c(2,1,0,4,1))
+```
+```{r, echo=T}
+frq %>% filter(CAT==cat2id(c(2,1,0,4,1))
+)
+```
+
+
+
+These are the categories that are absent and present once:
+```{r, echo=T, fig.width=4, fig.height=5}
+par(mfrow=c(1,2), mar=c(2,2,2,2))
+absent <- which(! 1:1024 %in% frq$CAT)
+plot_rect(absent, 1, colors=viridis(4), n_rect=length(absent), main="Absent")
+plot_geodist(frq %>% filter(COUNT==1), main="Singletons")
+```
+
+```{r}
+plot_geodist
+plot_rect
+```
+
+
+
+Some color experiments
+```{r, echo=T, fig.width=6, fig.height=5}
+par(mfrow=c(1,5), mar=c(3,2,0,0))
+plot_geodist(frq, colors=viridis(4))
+plot_geodist(frq, colors=rev(heat.colors(4)))
+plot_geodist(frq, colors=c('white',RColorBrewer::brewer.pal(3, 'YlOrRd')))
+plot_geodist(frq, colors=c('white', RColorBrewer::brewer.pal(3, 'PuBuGn')))
+plot_geodist(frq, colors=c('white', RColorBrewer::brewer.pal(3, 'YlGnBu')))
+```
+

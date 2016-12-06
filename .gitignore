@@ -5,3 +5,7 @@ pipeline/.snakemake
 .RData
 .Rhistory
 enrichment_analysis/data/
+overview_cache/
+overview_files/
+Rplots*.pdf
+
