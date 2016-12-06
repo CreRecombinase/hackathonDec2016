@@ -2,3 +2,5 @@ pipeline/data
 pipeline/.snakemake
 *.swp
 *.swo
+.RData
+.Rhistory
