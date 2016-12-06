@@ -1,8 +1,9 @@
 suppressPackageStartupMessages({
   library(dplyr)
   library(viridis)
+  library(readr)
 })
-source("utils.R")
+source("scripts/utils/utils.R")
 
 POPS <- c("AFR", "EUR", "SAS", "EAS", "AMR")
 N_POPS <- 5
@@ -11,7 +12,8 @@ N_LEVELS <- 4
 
 
 load_data <- function(){
-  data <- read.table("~/geodist/test.assign.tsv.gz")
+  #data <- read.table("~/geodist/test.assign.tsv.gz")
+  data <- data <- read_tsv("~/geodist/1kg_phase3_snps.geodist5d4l.simple.assign.tsv.gz", col_names=F)
   names(data) <- c("CHROM", "POS", "RSID", "CAT", POPS)
   
   fqs <- data %>% group_by(CAT, AFR, EUR, SAS, EAS, AMR) %>% summarize(COUNT=n())
@@ -19,9 +21,16 @@ load_data <- function(){
   fqs <- fqs %>% mutate(FREQ = COUNT/sum(COUNT))
 }
 
+tabulate_geodist <- function(data){
+  names(data) <- c("CHROM", "POS", "RSID", "CAT", POPS)
+  data %>% group_by(CAT, AFR, EUR, SAS, EAS, AMR) %>% summarize(COUNT=n()) %>%
+    ungroup() %>% arrange(desc(COUNT))
+}
+
 colors <- viridis(N_LEVELS)
 
-plot_geodist <- function(categories, counts, colors, annotation){
+plot_geodist <- function(geodist_table, colors=viridis(4), ...){
+  plot_rect(geodist_table$CAT, geodist_table$FREQ, colors=colors, ...)
   
 }
 
@@ -34,10 +43,11 @@ id2col <- function(id, colors){
   }
 }
 
-plot_rect <- function(id, y, colors, n_rect=NULL, ...){
+plot_rect <- function(id, y, colors, n_rect=NULL, add=F, ylim=0:1, ...){
   RECT_WIDTH <- 1
+  
   n_rect <- ifelse(is.null(n_rect), length(y), n_rect)
-  plot(NA, xlim=c(0,N_POPS), ylim=c(0,1), xaxs='i', yaxs='i', xaxt='n', ...)
+  
   
   xleft <- rep(SEQ_POPS, n_rect)
   xright <- xleft + RECT_WIDTH
@@ -48,6 +58,7 @@ plot_rect <- function(id, y, colors, n_rect=NULL, ...){
   
   colors <- t(id2col(id, colors))
   
+  if(!add)plot(NA, xlim=c(0,N_POPS), ylim=ylim, xaxs='i', yaxs='i', xaxt='n', ...)
   
   rect(xleft, 1-ybot, xright, 1-ytop, col=colors, lwd=1, border="#55555540")
   rect(0,0, N_POPS, 1) #border
