@@ -23,7 +23,10 @@ include: "projects/archaic/Snakefile"
 Get all called Denisovan and Neandertal sites as annotation
 """
 
+include: "projects/simple_binning/Snakefile"
+
 rule none:
     input: "Snakefile"
     run: print(DATA_GEODIST)
+
     

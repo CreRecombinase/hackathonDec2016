@@ -8,7 +8,7 @@ if(length(args)<1){
 }
 
 library(jsonlite)
-library(emdbook) # for dbetabinom
+#library(emdbook) # for dbetabinom
 source("scripts/utils/utils.R")
 
 sourcefilename<-"/project/jnovembre/data/external_public/geodist/1kg_phase3_snps.tsv.gz"
@@ -93,7 +93,7 @@ processData<-function(imax=1e12){
   fassign<-gzcon(assignfile)
   
   
-  i<-1
+  i<-0
   stopread<-FALSE
   
   while(!stopread) {

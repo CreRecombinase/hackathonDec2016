@@ -11,9 +11,10 @@ SEQ_POPS <- 0:(N_POPS-1)
 N_LEVELS <- 4
 
 
-load_data <- function(){
+load_data <- function(n_max=Inf){
   #data <- read.table("~/geodist/test.assign.tsv.gz")
-  data <- data <- read_tsv("~/geodist/1kg_phase3_snps.geodist5d4l.simple.assign.tsv.gz", col_names=F)
+  data <- data <- read_tsv("~/geodist/1kg_phase3_snps.geodist5d4l.simple.assign.tsv.gz", col_names=F,
+                           n_max=n_max)
   names(data) <- c("CHROM", "POS", "RSID", "CAT", POPS)
   
   fqs <- data %>% group_by(CAT, AFR, EUR, SAS, EAS, AMR) %>% summarize(COUNT=n())

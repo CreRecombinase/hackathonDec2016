@@ -4,3 +4,4 @@ pipeline/.snakemake
 *.swo
 .RData
 .Rhistory
+enrichment_analysis/data/

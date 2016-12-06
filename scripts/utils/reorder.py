@@ -15,7 +15,7 @@ out_order = [1, 3, 0, 2, 4]
 N_LVL = 4
 
 def get_cat_number(cats):
-    return sum(N_LVL ** i * c for (i, c)  in enumerate(cats))
+    return sum(N_LVL ** i * c for (i, c)  in enumerate(cats)) + 1
         
 
 with gzip.open(infile, 'rt') as f:
