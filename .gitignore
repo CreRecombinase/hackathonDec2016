@@ -2,3 +2,4 @@ pipeline/data
 pipeline/.snakemake
 *.swp
 *.swo
+enrichment_analysis/data/
